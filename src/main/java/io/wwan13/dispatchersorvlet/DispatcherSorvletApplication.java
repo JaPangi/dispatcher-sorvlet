@@ -14,10 +14,16 @@
  * limitations under the License.
  */
 
-package io.wwan13.dispatcher_sorvlet;
+package io.wwan13.dispatchersorvlet;
 
-import org.junit.jupiter.api.Tag;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@Tag("Unit")
-public class UnitTest {
+@SpringBootApplication
+public class DispatcherSorvletApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(DispatcherSorvletApplication.class, args);
+	}
+
 }

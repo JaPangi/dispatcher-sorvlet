@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.wwan13.dispatcher_sorvlet;
+package io.wwan13.dispatchersorvlet;
 
 import org.junit.jupiter.api.Tag;
 import org.springframework.boot.test.context.SpringBootTest;

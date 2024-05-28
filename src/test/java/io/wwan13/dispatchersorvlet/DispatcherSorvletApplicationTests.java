@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package io.wwan13.dispatcher_sorvlet;
+package io.wwan13.dispatchersorvlet;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootApplication
-public class DispatcherSorvletApplication {
+@SpringBootTest
+class DispatcherSorvletApplicationTests extends ContextTest {
 
-	public static void main(String[] args) {
-		SpringApplication.run(DispatcherSorvletApplication.class, args);
+	@Test
+	void contextLoads() {
 	}
 
 }

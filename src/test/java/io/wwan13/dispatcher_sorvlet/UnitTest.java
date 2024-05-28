@@ -16,14 +16,8 @@
 
 package io.wwan13.dispatcher_sorvlet;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.Tag;
 
-@SpringBootTest
-class DispatcherSorvletApplicationTests extends ContextTest {
-
-	@Test
-	void contextLoads() {
-	}
-
+@Tag("Unit")
+public class UnitTest {
 }

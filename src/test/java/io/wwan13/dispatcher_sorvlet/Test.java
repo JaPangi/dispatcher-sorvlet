@@ -16,14 +16,10 @@
 
 package io.wwan13.dispatcher_sorvlet;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 
-@SpringBootTest
-class DispatcherSorvletApplicationTests extends ContextTest {
-
-	@Test
-	void contextLoads() {
-	}
-
+@SuppressWarnings("NonAsciiCharacters")
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+public class Test {
 }

@@ -20,7 +20,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 
 	// argument resolver
-	implementation 'org.springframework:spring-web:6.1.8'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
 
 	// jackson object mapper
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.5'

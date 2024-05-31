@@ -14,22 +14,20 @@
  * limitations under the License.
  */
 
-package io.wwan13.dispatchersorvlet.configuration;
+package io.wwan13.dispatchersorvlet.sorvlet.processor.stub;
 
-import org.springframework.context.annotation.Import;
+import io.wwan13.dispatchersorvlet.sorvlet.SocketControllerScanner;
+import io.wwan13.dispatchersorvlet.sorvlet.container.ControllerContainer;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.util.Set;
 
-@Documented
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE})
-@Import({
-        SocketServerConfiguration.class,
-        DispatcherSorvletConfiguration.class
-})
-public @interface EnableSocketServer {
+public class StubSocketControllerScanner implements SocketControllerScanner {
+
+    @Override
+    public Set<Class<?>> scanControllerClasses(String scanBasePackages) {
+        return Set.of(
+                ControllerContainer.TestController.class,
+                ControllerContainer.Test2Controller.class
+        );
+    }
 }

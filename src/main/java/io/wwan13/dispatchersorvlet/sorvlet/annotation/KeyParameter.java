@@ -14,11 +14,16 @@
  * limitations under the License.
  */
 
-package io.wwan13.dispatchersorvlet.socket;
+package io.wwan13.dispatchersorvlet.sorvlet.annotation;
 
-public class SocketMessageHandler {
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-    void handleSocketMessage(String message, SocketConnection connection) {
-        
-    }
+@Target({ElementType.PARAMETER})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface KeyParameter {
 }

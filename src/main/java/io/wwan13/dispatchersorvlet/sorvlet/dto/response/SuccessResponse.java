@@ -14,22 +14,25 @@
  * limitations under the License.
  */
 
-package io.wwan13.dispatchersorvlet.configuration;
+package io.wwan13.dispatchersorvlet.sorvlet.dto.response;
 
-import org.springframework.context.annotation.Import;
+public class SuccessResponse<T> extends SocketResponse {
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+    private static final String DEFAULT_SUCCESS_MESSAGE = "request success";
 
-@Documented
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE})
-@Import({
-        SocketServerConfiguration.class,
-        DispatcherSorvletConfiguration.class
-})
-public @interface EnableSocketServer {
+    private final T data;
+
+    public SuccessResponse(T data, String message) {
+        super(ResponseStatus.SUCCESS, message);
+        this.data = data;
+    }
+
+    public SuccessResponse(T data) {
+        super(ResponseStatus.SUCCESS, DEFAULT_SUCCESS_MESSAGE);
+        this.data = data;
+    }
+
+    public T getData() {
+        return data;
+    }
 }

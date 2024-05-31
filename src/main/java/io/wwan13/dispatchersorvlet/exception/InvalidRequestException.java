@@ -14,22 +14,15 @@
  * limitations under the License.
  */
 
-package io.wwan13.dispatchersorvlet.configuration;
+package io.wwan13.dispatchersorvlet.exception;
 
-import org.springframework.context.annotation.Import;
+public class InvalidRequestException extends RuntimeException {
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+    private static final String DEFAULT_MESSAGE = "Invalid Request";
 
-@Documented
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE})
-@Import({
-        SocketServerConfiguration.class,
-        DispatcherSorvletConfiguration.class
-})
-public @interface EnableSocketServer {
+    private final String message;
+
+    public InvalidRequestException() {
+        this.message = DEFAULT_MESSAGE;
+    }
 }

@@ -14,22 +14,10 @@
  * limitations under the License.
  */
 
-package io.wwan13.dispatchersorvlet.configuration;
+package io.wwan13.dispatchersorvlet.sorvlet.dto.request;
 
-import org.springframework.context.annotation.Import;
-
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
-@Documented
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE})
-@Import({
-        SocketServerConfiguration.class,
-        DispatcherSorvletConfiguration.class
-})
-public @interface EnableSocketServer {
+public record SocketRequest(
+        String key,
+        Object body
+) {
 }

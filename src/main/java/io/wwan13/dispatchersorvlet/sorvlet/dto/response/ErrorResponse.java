@@ -14,22 +14,25 @@
  * limitations under the License.
  */
 
-package io.wwan13.dispatchersorvlet.configuration;
+package io.wwan13.dispatchersorvlet.sorvlet.dto.response;
 
-import org.springframework.context.annotation.Import;
+public class ErrorResponse extends SocketResponse {
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+    private static final String DEFAULT_ERROR_MESSAGE = "request failed";
 
-@Documented
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE})
-@Import({
-        SocketServerConfiguration.class,
-        DispatcherSorvletConfiguration.class
-})
-public @interface EnableSocketServer {
+    private final String errorCode;
+
+    protected ErrorResponse(String errorCode, String message) {
+        super(ResponseStatus.ERROR, message);
+        this.errorCode = errorCode;
+    }
+
+    protected ErrorResponse(String errorCode) {
+        super(ResponseStatus.ERROR, DEFAULT_ERROR_MESSAGE);
+        this.errorCode = errorCode;
+    }
+
+    public String getErrorCode() {
+        return errorCode;
+    }
 }

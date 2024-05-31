@@ -17,6 +17,7 @@
 package io.wwan13.dispatchersorvlet.socket;
 
 import io.wwan13.dispatchersorvlet.socket.enums.SocketCloseSignal;
+import io.wwan13.dispatchersorvlet.sorvlet.DispatcherSorvlet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationArguments;
@@ -32,16 +33,16 @@ public class SocketConnectionHandler implements ApplicationRunner {
 
     private final ServerSocket serverSocket;
     private final SocketConnectionPool connectionPool;
-    private final SocketMessageHandler messageHandler;
+    private final DispatcherSorvlet dispatcherSorvlet;
 
     public SocketConnectionHandler(
             ServerSocket serverSocket,
             SocketConnectionPool connectionPool,
-            SocketMessageHandler messageHandler
+            DispatcherSorvlet dispatcherSorvlet
     ) {
         this.serverSocket = serverSocket;
         this.connectionPool = connectionPool;
-        this.messageHandler = messageHandler;
+        this.dispatcherSorvlet = dispatcherSorvlet;
     }
 
     @Override
@@ -56,7 +57,8 @@ public class SocketConnectionHandler implements ApplicationRunner {
                 log.info("Socket started on port(s) {} (tcp/ip)", serverSocket.getLocalPort());
                 while (true) {
                     Socket socket = serverSocket.accept();
-                    SocketConnection connection = SocketConnection.of(socket, messageHandler);
+                    SocketConnection connection =
+                            SocketConnection.of(socket, dispatcherSorvlet);
                     connectionPool.add(connection);
                 }
             } catch (IOException e) {

@@ -28,7 +28,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE})
 @Import({
-        SocketServerConfiguration.class
+        SocketServerConfiguration.class,
+        DispatcherSorvletConfiguration.class
 })
 public @interface EnableSocketServer {
 }

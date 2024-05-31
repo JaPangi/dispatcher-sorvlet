@@ -18,6 +18,7 @@ package io.wwan13.dispatchersorvlet.socket;
 
 import io.wwan13.dispatchersorvlet.socket.enums.SocketCloseSignal;
 import io.wwan13.dispatchersorvlet.socket.enums.SocketConnectionStatus;
+import io.wwan13.dispatchersorvlet.sorvlet.DispatcherSorvlet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -30,26 +31,26 @@ public class SocketConnection extends Thread {
     private static final String SYSTEM_EXIST_SIGNAL = "SYSTEM_EXIT";
 
     private final SocketClient client;
-    private final SocketMessageHandler messageHandler;
+    private final DispatcherSorvlet dispatcherSorvlet;
     private SocketConnectionStatus status;
 
     public SocketConnection(
             SocketClient client,
-            SocketMessageHandler messageHandler,
+            DispatcherSorvlet dispatcherSorvlet,
             SocketConnectionStatus status
     ) {
         this.client = client;
-        this.messageHandler = messageHandler;
+        this.dispatcherSorvlet = dispatcherSorvlet;
         this.status = status;
     }
 
     public static SocketConnection of(
             Socket socket,
-            SocketMessageHandler messageHandler
+            DispatcherSorvlet dispatcherSorvlet
     ) {
         return new SocketConnection(
                 SocketClient.of(socket),
-                messageHandler,
+                dispatcherSorvlet,
                 SocketConnectionStatus.CONNECTED
         );
     }
@@ -73,7 +74,8 @@ public class SocketConnection extends Thread {
         String message = client.readMessage();
         if (message != null) {
             checkSystemExitSignal(message);
-            messageHandler.handleSocketMessage(message, this);
+            String result = dispatcherSorvlet.doService(message);
+            client.writeMessage(result);
         }
     }
 

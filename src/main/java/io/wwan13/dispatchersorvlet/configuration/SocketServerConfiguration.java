@@ -19,7 +19,7 @@ package io.wwan13.dispatchersorvlet.configuration;
 import io.wwan13.dispatchersorvlet.socket.SocketConnectionHandler;
 import io.wwan13.dispatchersorvlet.socket.SocketConnectionPool;
 import io.wwan13.dispatchersorvlet.socket.SocketHealthCheckHandler;
-import io.wwan13.dispatchersorvlet.socket.SocketMessageHandler;
+import io.wwan13.dispatchersorvlet.sorvlet.DispatcherSorvlet;
 import org.springframework.context.annotation.Bean;
 
 import java.io.IOException;
@@ -32,7 +32,7 @@ public class SocketServerConfiguration {
         try {
             return new ServerSocket(8070);
         } catch (IOException e) {
-            throw new RuntimeException("cannot open socket server");
+            throw new RuntimeException("Port 8070 is already allocated");
         }
     }
 
@@ -42,20 +42,15 @@ public class SocketServerConfiguration {
     }
 
     @Bean
-    public SocketMessageHandler socketMessageHandler() {
-        return new SocketMessageHandler();
-    }
-
-    @Bean
     public SocketConnectionHandler socketConnectionHandler(
             ServerSocket serverSocket,
             SocketConnectionPool socketConnectionPool,
-            SocketMessageHandler socketMessageHandler
+            DispatcherSorvlet dispatcherSorvlet
     ) {
         return new SocketConnectionHandler(
                 serverSocket,
                 socketConnectionPool,
-                socketMessageHandler
+                dispatcherSorvlet
         );
     }
 

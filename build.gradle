@@ -19,12 +19,12 @@ dependencies {
 	// spring framework
 	implementation 'org.springframework.boot:spring-boot-starter'
 
-	// argument resolver
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-
 	// jackson object mapper
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.5'
 	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.5'
+
+	// reflections api
+	implementation 'org.reflections:reflections:0.9.10'
 
 	// test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'

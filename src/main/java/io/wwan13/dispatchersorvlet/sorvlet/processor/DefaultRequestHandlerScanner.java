@@ -22,6 +22,7 @@ import io.wwan13.dispatchersorvlet.sorvlet.ComponentScanner;
 import io.wwan13.dispatchersorvlet.sorvlet.RequestHandlerScanner;
 import io.wwan13.dispatchersorvlet.sorvlet.annotation.RequestMapping;
 import io.wwan13.dispatchersorvlet.sorvlet.annotation.SocketController;
+import io.wwan13.dispatchersorvlet.util.NamingConverter;
 import org.springframework.context.ApplicationContext;
 
 import java.lang.reflect.Method;
@@ -57,20 +58,12 @@ public class DefaultRequestHandlerScanner implements RequestHandlerScanner {
         Set<RequestHandler> handlers = new HashSet<>();
 
         for (Class<?> controller : controllerClasses) {
-            Object registeredController = applicationContext.getBean(toBeanName(controller));
+            Object registeredController = applicationContext
+                    .getBean(NamingConverter.toLowerCamelCase(controller.getSimpleName()));
             extractHandlers(registeredController, handlers);
         }
 
         return handlers;
-    }
-
-    private String toBeanName(Class<?> controller) {
-        String controllerName = controller.getSimpleName();
-        char firstLetter = controllerName.charAt(0);
-        return controllerName.replace(
-                controllerName.charAt(0),
-                Character.toLowerCase(firstLetter)
-        );
     }
 
     private void extractHandlers(

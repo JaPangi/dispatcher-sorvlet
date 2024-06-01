@@ -16,7 +16,7 @@
 
 package io.wwan13.dispatchersorvlet.sorvlet;
 
-public interface SocketHandlerScanner {
+public interface RequestHandlerScanner {
 
     RequestHandlers scan(String scanBasePackages);
 }

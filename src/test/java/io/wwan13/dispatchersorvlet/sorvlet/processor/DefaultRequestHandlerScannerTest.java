@@ -24,10 +24,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class DefaultSocketHandlerScannerTest extends UnitTest {
+class DefaultRequestHandlerScannerTest extends UnitTest {
 
-    static DefaultSocketHandlerScanner handlerScanner =
-            new DefaultSocketHandlerScanner(
+    static DefaultRequestHandlerScanner handlerScanner =
+            new DefaultRequestHandlerScanner(
                     new StubSocketControllerScanner(),
                     new StubApplicationContext()
             );

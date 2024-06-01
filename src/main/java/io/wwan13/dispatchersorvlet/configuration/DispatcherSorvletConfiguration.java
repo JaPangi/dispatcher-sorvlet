@@ -17,29 +17,29 @@
 package io.wwan13.dispatchersorvlet.configuration;
 
 import io.wwan13.dispatchersorvlet.sorvlet.ArgumentsResolver;
-import io.wwan13.dispatchersorvlet.sorvlet.SocketControllerScanner;
+import io.wwan13.dispatchersorvlet.sorvlet.ComponentScanner;
 import io.wwan13.dispatchersorvlet.sorvlet.DispatcherSorvlet;
 import io.wwan13.dispatchersorvlet.sorvlet.RequestHandlerScanner;
 import io.wwan13.dispatchersorvlet.sorvlet.RequestHandlers;
 import io.wwan13.dispatchersorvlet.sorvlet.processor.DefaultArgumentsResolver;
 import io.wwan13.dispatchersorvlet.sorvlet.processor.DefaultRequestHandlerScanner;
-import io.wwan13.dispatchersorvlet.sorvlet.processor.ReflectionSocketControllerScanner;
+import io.wwan13.dispatchersorvlet.sorvlet.processor.ReflectionComponentScanner;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 public class DispatcherSorvletConfiguration {
 
     @Bean
-    public SocketControllerScanner socketControllerScanner() {
-        return new ReflectionSocketControllerScanner();
+    public ComponentScanner socketControllerScanner() {
+        return new ReflectionComponentScanner();
     }
 
     @Bean
     public RequestHandlerScanner requestHandlerScanner(
-            SocketControllerScanner socketControllerScanner,
+            ComponentScanner componentScanner,
             ApplicationContext applicationContext
     ) {
-        return new DefaultRequestHandlerScanner(socketControllerScanner, applicationContext);
+        return new DefaultRequestHandlerScanner(componentScanner, applicationContext);
     }
 
     @Bean

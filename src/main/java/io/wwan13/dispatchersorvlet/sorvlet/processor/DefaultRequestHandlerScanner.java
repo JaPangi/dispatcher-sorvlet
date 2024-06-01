@@ -18,9 +18,10 @@ package io.wwan13.dispatchersorvlet.sorvlet.processor;
 
 import io.wwan13.dispatchersorvlet.sorvlet.RequestHandler;
 import io.wwan13.dispatchersorvlet.sorvlet.RequestHandlers;
-import io.wwan13.dispatchersorvlet.sorvlet.SocketControllerScanner;
+import io.wwan13.dispatchersorvlet.sorvlet.ComponentScanner;
 import io.wwan13.dispatchersorvlet.sorvlet.RequestHandlerScanner;
 import io.wwan13.dispatchersorvlet.sorvlet.annotation.RequestMapping;
+import io.wwan13.dispatchersorvlet.sorvlet.annotation.SocketController;
 import org.springframework.context.ApplicationContext;
 
 import java.lang.reflect.Method;
@@ -30,21 +31,21 @@ import java.util.Set;
 
 public class DefaultRequestHandlerScanner implements RequestHandlerScanner {
 
-    private final SocketControllerScanner socketControllerScanner;
+    private final ComponentScanner componentScanner;
     private final ApplicationContext applicationContext;
 
     public DefaultRequestHandlerScanner(
-            SocketControllerScanner socketControllerScanner,
+            ComponentScanner componentScanner,
             ApplicationContext applicationContext
     ) {
-        this.socketControllerScanner = socketControllerScanner;
+        this.componentScanner = componentScanner;
         this.applicationContext = applicationContext;
     }
 
     @Override
     public RequestHandlers scan(String scanBasePackages) {
-        Set<Class<?>> controllerClasses =
-                socketControllerScanner.scanControllerClasses(scanBasePackages);
+        Set<Class<?>> controllerClasses = componentScanner
+                .scanComponentsWithAnnotation(SocketController.class, scanBasePackages);
         Set<RequestHandler> handlers = extractAllHandlers(controllerClasses);
 
         return new RequestHandlers(handlers);

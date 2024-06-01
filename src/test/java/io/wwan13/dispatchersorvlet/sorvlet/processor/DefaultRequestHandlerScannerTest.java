@@ -19,7 +19,7 @@ package io.wwan13.dispatchersorvlet.sorvlet.processor;
 import io.wwan13.dispatchersorvlet.UnitTest;
 import io.wwan13.dispatchersorvlet.sorvlet.RequestHandlers;
 import io.wwan13.dispatchersorvlet.sorvlet.processor.stub.StubApplicationContext;
-import io.wwan13.dispatchersorvlet.sorvlet.processor.stub.StubSocketControllerScanner;
+import io.wwan13.dispatchersorvlet.sorvlet.processor.stub.StubComponentScanner;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -28,7 +28,7 @@ class DefaultRequestHandlerScannerTest extends UnitTest {
 
     static DefaultRequestHandlerScanner handlerScanner =
             new DefaultRequestHandlerScanner(
-                    new StubSocketControllerScanner(),
+                    new StubComponentScanner(),
                     new StubApplicationContext()
             );
 

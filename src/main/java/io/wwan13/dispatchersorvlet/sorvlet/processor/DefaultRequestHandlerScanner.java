@@ -19,7 +19,7 @@ package io.wwan13.dispatchersorvlet.sorvlet.processor;
 import io.wwan13.dispatchersorvlet.sorvlet.RequestHandler;
 import io.wwan13.dispatchersorvlet.sorvlet.RequestHandlers;
 import io.wwan13.dispatchersorvlet.sorvlet.SocketControllerScanner;
-import io.wwan13.dispatchersorvlet.sorvlet.SocketHandlerScanner;
+import io.wwan13.dispatchersorvlet.sorvlet.RequestHandlerScanner;
 import io.wwan13.dispatchersorvlet.sorvlet.annotation.RequestMapping;
 import org.springframework.context.ApplicationContext;
 
@@ -28,12 +28,12 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-public class DefaultSocketHandlerScanner implements SocketHandlerScanner {
+public class DefaultRequestHandlerScanner implements RequestHandlerScanner {
 
     private final SocketControllerScanner socketControllerScanner;
     private final ApplicationContext applicationContext;
 
-    public DefaultSocketHandlerScanner(
+    public DefaultRequestHandlerScanner(
             SocketControllerScanner socketControllerScanner,
             ApplicationContext applicationContext
     ) {

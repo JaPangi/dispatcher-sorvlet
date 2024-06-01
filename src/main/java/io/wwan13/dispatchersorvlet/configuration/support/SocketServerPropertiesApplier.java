@@ -14,9 +14,19 @@
  * limitations under the License.
  */
 
-package io.wwan13.dispatchersorvlet.sorvlet;
+package io.wwan13.dispatchersorvlet.configuration.support;
 
-public interface SocketHandlerScanner {
+import io.wwan13.dispatchersorvlet.configuration.SocketServerProperties;
 
-    RequestHandlers scan(String scanBasePackages);
+public class SocketServerPropertiesApplier {
+
+    private SocketServerPropertiesApplier() {
+        throw new IllegalStateException("Cannot instantiate a utility class!");
+    }
+
+    public static SocketServerProperties apply(
+            SocketServerPropertiesRegistry registry
+    ) {
+        return registry.apply();
+    }
 }

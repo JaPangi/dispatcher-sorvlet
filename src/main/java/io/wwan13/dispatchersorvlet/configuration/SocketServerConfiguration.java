@@ -28,11 +28,13 @@ import java.net.ServerSocket;
 public class SocketServerConfiguration {
 
     @Bean
-    public ServerSocket serverSocket() {
+    public ServerSocket serverSocket(
+            SocketServerProperties socketServerProperties
+    ) {
         try {
-            return new ServerSocket(8070);
+            return new ServerSocket(socketServerProperties.port());
         } catch (IOException e) {
-            throw new RuntimeException("Port 8070 is already allocated");
+            throw new RuntimeException("Port " + socketServerProperties.port() + " is already allocated");
         }
     }
 

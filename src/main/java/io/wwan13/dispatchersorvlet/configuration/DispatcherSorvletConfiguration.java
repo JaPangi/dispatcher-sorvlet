@@ -44,9 +44,10 @@ public class DispatcherSorvletConfiguration {
 
     @Bean
     public RequestHandlers socketHandlers(
-            RequestHandlerScanner requestHandlerScanner
+            RequestHandlerScanner requestHandlerScanner,
+            SocketServerProperties socketServerProperties
     ) {
-        return requestHandlerScanner.scan("");
+        return requestHandlerScanner.scan(socketServerProperties.scanBasePackage());
     }
 
     @Bean

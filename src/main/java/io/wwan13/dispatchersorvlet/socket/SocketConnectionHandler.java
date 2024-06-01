@@ -29,7 +29,7 @@ import java.net.Socket;
 
 public class SocketConnectionHandler implements ApplicationRunner {
 
-    private static final Logger log = LoggerFactory.getLogger(SocketConnection.class);
+    private static final Logger log = LoggerFactory.getLogger(SocketConnectionHandler.class);
 
     private final ServerSocket serverSocket;
     private final SocketConnectionPool connectionPool;

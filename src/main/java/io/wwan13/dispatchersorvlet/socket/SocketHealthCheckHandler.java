@@ -23,7 +23,7 @@ import org.springframework.boot.ApplicationRunner;
 
 public class SocketHealthCheckHandler implements ApplicationRunner {
 
-    private static final Logger log = LoggerFactory.getLogger(SocketConnection.class);
+    private static final Logger log = LoggerFactory.getLogger(SocketHealthCheckHandler.class);
     private static final int HEALTH_CHECK_TERM = 30000;
 
     private final SocketConnectionPool connectionPool;
@@ -42,7 +42,6 @@ public class SocketHealthCheckHandler implements ApplicationRunner {
         return () -> {
             while (true) {
                 waitForHealthCheckTerm();
-                log.info("Health checking");
                 connectionPool.removeClosedConnections();
                 connectionPool.checkAllConnectionsHealth();
             }
@@ -56,5 +55,4 @@ public class SocketHealthCheckHandler implements ApplicationRunner {
             throw new RuntimeException("cannot wait");
         }
     }
-
 }

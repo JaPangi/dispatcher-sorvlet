@@ -21,8 +21,5 @@ import java.util.Set;
 
 public interface ComponentScanner {
 
-    Set<Class<?>> scanComponentsWithAnnotation(
-            Class<? extends Annotation> targetAnnotation,
-            String scanBasePackages
-    );
+    Set<Class<?>> scanComponentsWithAnnotation(Class<? extends Annotation> targetAnnotation);
 }

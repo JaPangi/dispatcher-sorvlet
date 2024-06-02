@@ -18,5 +18,5 @@ package io.wwan13.dispatchersorvlet.sorvlet;
 
 public interface ExceptionHandlerScanner {
 
-    ExceptionHandlers scan(String scanBasePackages);
+    ExceptionHandlers scan();
 }

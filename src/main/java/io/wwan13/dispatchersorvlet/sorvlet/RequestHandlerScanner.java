@@ -18,5 +18,5 @@ package io.wwan13.dispatchersorvlet.sorvlet;
 
 public interface RequestHandlerScanner {
 
-    RequestHandlers scan(String scanBasePackages);
+    RequestHandlers scan();
 }

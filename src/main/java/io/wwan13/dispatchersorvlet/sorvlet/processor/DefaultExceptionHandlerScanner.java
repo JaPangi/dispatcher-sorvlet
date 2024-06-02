@@ -46,9 +46,9 @@ public class DefaultExceptionHandlerScanner implements ExceptionHandlerScanner {
     }
 
     @Override
-    public ExceptionHandlers scan(String scanBasePackages) {
+    public ExceptionHandlers scan() {
         Set<Class<?>> controllerAdviceClasses = componentScanner
-                .scanComponentsWithAnnotation(SocketControllerAdvice.class, scanBasePackages);
+                .scanComponentsWithAnnotation(SocketControllerAdvice.class);
         List<ExceptionHandler> exceptionHandlers = extractAllHandlers(controllerAdviceClasses);
 
         return new ExceptionHandlers(exceptionHandlers);

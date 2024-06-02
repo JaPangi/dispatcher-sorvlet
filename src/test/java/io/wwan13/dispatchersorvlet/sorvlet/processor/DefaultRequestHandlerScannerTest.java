@@ -45,7 +45,7 @@ class DefaultRequestHandlerScannerTest extends UnitTest {
                 new DefaultRequestHandlerScanner(componentScanner, new StubApplicationContext());
 
         // when
-        RequestHandlers handlers = handlerScanner.scan(basePath);
+        RequestHandlers handlers = handlerScanner.scan();
 
         // then
         assertThat(handlers.handlers().size()).isEqualTo(5);

@@ -35,7 +35,6 @@ class DefaultExceptionHandlerScannerTest extends UnitTest {
     @Test
     void should_ExtractAllHandlers() {
         // given
-        final String basePath = "";
         final StubComponentScanner componentScanner = new StubComponentScanner();
         componentScanner.componentsWillBe(
                 Set.of(
@@ -47,7 +46,7 @@ class DefaultExceptionHandlerScannerTest extends UnitTest {
                 new DefaultExceptionHandlerScanner(componentScanner, new StubApplicationContext());
 
         // when
-        ExceptionHandlers handlers = scanner.scan(basePath);
+        ExceptionHandlers handlers = scanner.scan();
 
         // then
         assertThat(handlers.handlers().size()).isEqualTo(3);
@@ -68,7 +67,7 @@ class DefaultExceptionHandlerScannerTest extends UnitTest {
                 new DefaultExceptionHandlerScanner(componentScanner, new StubApplicationContext());
 
         // when
-        ExceptionHandlers handlers = scanner.scan(basePath);
+        ExceptionHandlers handlers = scanner.scan();
         List<? extends Class<? extends Exception>> handlerSupports = handlers.handlers().stream()
                 .map(ExceptionHandler::exceptionClazz)
                 .toList();

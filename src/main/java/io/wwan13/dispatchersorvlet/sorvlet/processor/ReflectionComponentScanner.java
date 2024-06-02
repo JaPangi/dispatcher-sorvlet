@@ -26,13 +26,18 @@ import java.util.Set;
 
 public class ReflectionComponentScanner implements ComponentScanner {
 
+    private final String scanBasePackage;
+
+    public ReflectionComponentScanner(String scanBasePackage) {
+        this.scanBasePackage = scanBasePackage;
+    }
+
     @Override
     public Set<Class<?>> scanComponentsWithAnnotation(
-            Class<? extends Annotation> targetAnnotation,
-            String scanBasePackages
+            Class<? extends Annotation> targetAnnotation
     ) {
         Reflections reflections = new Reflections(
-                scanBasePackages,
+                scanBasePackage,
                 new TypeAnnotationsScanner(),
                 new SubTypesScanner()
         );

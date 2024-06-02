@@ -44,9 +44,9 @@ public class DefaultRequestHandlerScanner implements RequestHandlerScanner {
     }
 
     @Override
-    public RequestHandlers scan(String scanBasePackages) {
+    public RequestHandlers scan() {
         Set<Class<?>> controllerClasses = componentScanner
-                .scanComponentsWithAnnotation(SocketController.class, scanBasePackages);
+                .scanComponentsWithAnnotation(SocketController.class);
         Set<RequestHandler> handlers = extractAllHandlers(controllerClasses);
 
         return new RequestHandlers(handlers);

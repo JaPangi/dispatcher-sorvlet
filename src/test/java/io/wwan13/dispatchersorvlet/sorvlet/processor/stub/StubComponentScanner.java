@@ -31,8 +31,7 @@ public class StubComponentScanner implements ComponentScanner {
 
     @Override
     public Set<Class<?>> scanComponentsWithAnnotation(
-            Class<? extends Annotation> targetAnnotation,
-            String scanBasePackages
+            Class<? extends Annotation> targetAnnotation
     ) {
         return components;
     }

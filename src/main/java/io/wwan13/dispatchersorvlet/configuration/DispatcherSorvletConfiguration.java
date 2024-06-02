@@ -33,20 +33,21 @@ import org.springframework.context.annotation.Bean;
 public class DispatcherSorvletConfiguration {
 
     @Bean
-    public ComponentScanner componentScanner() {
-        return new ReflectionComponentScanner();
+    public ComponentScanner componentScanner(
+            SocketServerProperties socketServerProperties
+    ) {
+        return new ReflectionComponentScanner(socketServerProperties.scanBasePackage());
     }
 
     @Bean
     public RequestHandlers requestHandlers(
-            SocketServerProperties socketServerProperties,
             ComponentScanner componentScanner,
             ApplicationContext applicationContext
     ) {
         RequestHandlerScanner requestHandlerScanner =
                 new DefaultRequestHandlerScanner(componentScanner, applicationContext);
 
-        return requestHandlerScanner.scan(socketServerProperties.scanBasePackage());
+        return requestHandlerScanner.scan();
     }
 
     @Bean
@@ -56,14 +57,13 @@ public class DispatcherSorvletConfiguration {
 
     @Bean
     public ExceptionHandlers exceptionHandlers(
-            SocketServerProperties socketServerProperties,
             ComponentScanner componentScanner,
             ApplicationContext applicationContext
     ) {
         ExceptionHandlerScanner scanner =
                 new DefaultExceptionHandlerScanner(componentScanner, applicationContext);
 
-        return scanner.scan(socketServerProperties.scanBasePackage());
+        return scanner.scan();
     }
 
     @Bean

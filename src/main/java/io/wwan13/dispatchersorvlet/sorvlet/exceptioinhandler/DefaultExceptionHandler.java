@@ -14,14 +14,16 @@
  * limitations under the License.
  */
 
-package io.wwan13.dispatchersorvlet;
+package io.wwan13.dispatchersorvlet.sorvlet.exceptioinhandler;
 
-import org.junit.jupiter.api.Test;
+import io.wwan13.dispatchersorvlet.sorvlet.annotation.ExceptionHandler;
+import io.wwan13.dispatchersorvlet.sorvlet.dto.response.ErrorResponse;
+import io.wwan13.dispatchersorvlet.sorvlet.dto.response.SocketResponse;
 
-class DispatcherSorvletApplicationTests extends ContextTest {
+public class DefaultExceptionHandler {
 
-    @Test
-    void contextLoads() {
+    @ExceptionHandler(support = Exception.class)
+    public ErrorResponse handleDefaultException(Exception e) {
+        return SocketResponse.error(e.getClass().getSimpleName(), e.getMessage());
     }
-
 }

@@ -16,21 +16,23 @@
 
 package io.wwan13.dispatchersorvlet.sorvlet;
 
-import io.wwan13.dispatchersorvlet.exception.HandlerNotFoundException;
-import io.wwan13.dispatchersorvlet.sorvlet.support.RequestKeyMatcher;
+import io.wwan13.dispatchersorvlet.sorvlet.exceptioinhandler.DefaultExceptionHandler;
 
-import java.util.Set;
+import java.util.List;
 
-public record RequestHandlers(
-        Set<RequestHandler> handlers
+public record ExceptionHandlers(
+        List<ExceptionHandler> handlers
 ) {
 
-    private static final RequestKeyMatcher requestKeyMatcher = new RequestKeyMatcher();
+    private static final ExceptionHandler DEFAULT_EXCEPTION_HANDLER = ExceptionHandler.of(
+            new DefaultExceptionHandler(),
+            DefaultExceptionHandler.class.getDeclaredMethods()[0]
+    );
 
-    public RequestHandler handlerMapping(String requestKey) {
+    public ExceptionHandler handlerMapping(Exception exception) {
         return handlers.stream()
-                .filter(handler -> requestKeyMatcher.matches(handler.requestKey(), requestKey))
-                .findAny()
-                .orElseThrow(() -> new HandlerNotFoundException(requestKey));
+                .filter(handler -> handler.matches(exception))
+                .findFirst()
+                .orElse(DEFAULT_EXCEPTION_HANDLER);
     }
 }

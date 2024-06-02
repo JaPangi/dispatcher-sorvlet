@@ -14,14 +14,19 @@
  * limitations under the License.
  */
 
-package io.wwan13.dispatchersorvlet;
+package io.wwan13.dispatchersorvlet.util;
 
-import org.junit.jupiter.api.Test;
+public class NamingConverter {
 
-class DispatcherSorvletApplicationTests extends ContextTest {
-
-    @Test
-    void contextLoads() {
+    public NamingConverter() {
+        throw new IllegalStateException("Cannot instantiate a utility class!");
     }
 
+    public static String toLowerCamelCase(String original) {
+        char firstLetter = original.charAt(0);
+        return original.replace(
+                original.charAt(0),
+                Character.toLowerCase(firstLetter)
+        );
+    }
 }

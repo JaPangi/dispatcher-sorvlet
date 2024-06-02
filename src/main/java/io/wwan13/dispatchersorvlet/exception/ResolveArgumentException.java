@@ -25,4 +25,9 @@ public class ResolveArgumentException extends RuntimeException{
     public ResolveArgumentException() {
         this.message = DEFAULT_MESSAGE;
     }
+
+    @Override
+    public String getMessage() {
+        return message;
+    }
 }

@@ -14,14 +14,25 @@
  * limitations under the License.
  */
 
-package io.wwan13.dispatchersorvlet;
+package io.wwan13.dispatchersorvlet.sorvlet.util;
 
-import org.junit.jupiter.api.Test;
+public class ExceptionUtil {
 
-class DispatcherSorvletApplicationTests extends ContextTest {
-
-    @Test
-    void contextLoads() {
+    public ExceptionUtil() {
+        throw new IllegalStateException("Cannot instantiate a utility class!");
     }
 
+    public static int getExceptionExtendedLevel(
+            Class<? extends Exception> exceptionClazz
+    ) {
+        int count = 0;
+        Class<?> tmp = exceptionClazz;
+        while (true) {
+            if (tmp == Exception.class) {
+                return count;
+            }
+            tmp = tmp.getSuperclass();
+            count += 1;
+        }
+    }
 }

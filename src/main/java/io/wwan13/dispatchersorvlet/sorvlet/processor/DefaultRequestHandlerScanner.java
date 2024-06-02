@@ -18,9 +18,11 @@ package io.wwan13.dispatchersorvlet.sorvlet.processor;
 
 import io.wwan13.dispatchersorvlet.sorvlet.RequestHandler;
 import io.wwan13.dispatchersorvlet.sorvlet.RequestHandlers;
-import io.wwan13.dispatchersorvlet.sorvlet.SocketControllerScanner;
+import io.wwan13.dispatchersorvlet.sorvlet.ComponentScanner;
 import io.wwan13.dispatchersorvlet.sorvlet.RequestHandlerScanner;
 import io.wwan13.dispatchersorvlet.sorvlet.annotation.RequestMapping;
+import io.wwan13.dispatchersorvlet.sorvlet.annotation.SocketController;
+import io.wwan13.dispatchersorvlet.util.NamingConverter;
 import org.springframework.context.ApplicationContext;
 
 import java.lang.reflect.Method;
@@ -30,21 +32,21 @@ import java.util.Set;
 
 public class DefaultRequestHandlerScanner implements RequestHandlerScanner {
 
-    private final SocketControllerScanner socketControllerScanner;
+    private final ComponentScanner componentScanner;
     private final ApplicationContext applicationContext;
 
     public DefaultRequestHandlerScanner(
-            SocketControllerScanner socketControllerScanner,
+            ComponentScanner componentScanner,
             ApplicationContext applicationContext
     ) {
-        this.socketControllerScanner = socketControllerScanner;
+        this.componentScanner = componentScanner;
         this.applicationContext = applicationContext;
     }
 
     @Override
-    public RequestHandlers scan(String scanBasePackages) {
-        Set<Class<?>> controllerClasses =
-                socketControllerScanner.scanControllerClasses(scanBasePackages);
+    public RequestHandlers scan() {
+        Set<Class<?>> controllerClasses = componentScanner
+                .scanComponentsWithAnnotation(SocketController.class);
         Set<RequestHandler> handlers = extractAllHandlers(controllerClasses);
 
         return new RequestHandlers(handlers);
@@ -56,27 +58,19 @@ public class DefaultRequestHandlerScanner implements RequestHandlerScanner {
         Set<RequestHandler> handlers = new HashSet<>();
 
         for (Class<?> controller : controllerClasses) {
-            Object registeredController = applicationContext.getBean(toBeanName(controller));
+            Object registeredController = applicationContext
+                    .getBean(NamingConverter.toLowerCamelCase(controller.getSimpleName()));
             extractHandlers(registeredController, handlers);
         }
 
         return handlers;
     }
 
-    private String toBeanName(Class<?> controller) {
-        String controllerName = controller.getSimpleName();
-        char firstLetter = controllerName.charAt(0);
-        return controllerName.replace(
-                controllerName.charAt(0),
-                Character.toLowerCase(firstLetter)
-        );
-    }
-
     private void extractHandlers(
             Object controller,
             Set<RequestHandler> handlers
     ) {
-        Arrays.stream(controller.getClass().getMethods())
+        Arrays.stream(controller.getClass().getDeclaredMethods())
                 .filter(this::isHandlerMethod)
                 .forEach(method -> {
                     RequestHandler handler = RequestHandler.of(controller, method);

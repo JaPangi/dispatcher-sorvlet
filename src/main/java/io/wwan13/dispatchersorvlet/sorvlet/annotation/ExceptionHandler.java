@@ -14,14 +14,18 @@
  * limitations under the License.
  */
 
-package io.wwan13.dispatchersorvlet;
+package io.wwan13.dispatchersorvlet.sorvlet.annotation;
 
-import org.junit.jupiter.api.Test;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-class DispatcherSorvletApplicationTests extends ContextTest {
+@Target({ElementType.TYPE, ElementType.METHOD})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface ExceptionHandler {
 
-    @Test
-    void contextLoads() {
-    }
-
+    Class<? extends Exception> support();
 }

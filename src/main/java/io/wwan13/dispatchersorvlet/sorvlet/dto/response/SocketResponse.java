@@ -18,20 +18,23 @@ package io.wwan13.dispatchersorvlet.sorvlet.dto.response;
 
 public abstract class SocketResponse {
 
-    private final ResponseStatus status;
-    private final String message;
+    private ResponseStatus status;
+    private String message;
+
+    public SocketResponse() {
+    }
 
     protected SocketResponse(ResponseStatus status, String message) {
         this.status = status;
         this.message = message;
     }
 
-    public static <T> SocketResponse success(T data) {
-        return new SuccessResponse<T>(data);
+    public static <T> SuccessResponse success(T data) {
+        return new SuccessResponse<>(data);
     }
 
-    public static <T> SocketResponse success(T data, String message) {
-        return new SuccessResponse<T>(data, message);
+    public static <T> SuccessResponse success(T data, String message) {
+        return new SuccessResponse<>(data, message);
     }
 
     public static ErrorResponse error(String errorCode) {

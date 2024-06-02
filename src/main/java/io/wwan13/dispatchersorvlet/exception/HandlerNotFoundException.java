@@ -18,12 +18,13 @@ package io.wwan13.dispatchersorvlet.exception;
 
 public class HandlerNotFoundException extends RuntimeException {
 
-    private static final String DEFAULT_MESSAGE = "Cannot find registered handler";
+    private static final String MESSAGE_FORMAT =
+            "Cannot find registered handler (request key : %s)";
 
     private final String message;
 
-    public HandlerNotFoundException() {
-        this.message = DEFAULT_MESSAGE;
+    public HandlerNotFoundException(String requestKey) {
+        this.message = String.format(MESSAGE_FORMAT, requestKey);
     }
 
     @Override

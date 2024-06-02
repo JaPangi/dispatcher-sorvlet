@@ -16,24 +16,32 @@
 
 package io.wwan13.dispatchersorvlet.sorvlet.processor;
 
-import io.wwan13.dispatchersorvlet.sorvlet.SocketControllerScanner;
-import io.wwan13.dispatchersorvlet.sorvlet.annotation.SocketController;
+import io.wwan13.dispatchersorvlet.sorvlet.ComponentScanner;
 import org.reflections.Reflections;
 import org.reflections.scanners.SubTypesScanner;
 import org.reflections.scanners.TypeAnnotationsScanner;
 
+import java.lang.annotation.Annotation;
 import java.util.Set;
 
-public class ReflectionSocketControllerScanner implements SocketControllerScanner {
+public class ReflectionComponentScanner implements ComponentScanner {
+
+    private final String scanBasePackage;
+
+    public ReflectionComponentScanner(String scanBasePackage) {
+        this.scanBasePackage = scanBasePackage;
+    }
 
     @Override
-    public Set<Class<?>> scanControllerClasses(String scanBasePackages) {
+    public Set<Class<?>> scanComponentsWithAnnotation(
+            Class<? extends Annotation> targetAnnotation
+    ) {
         Reflections reflections = new Reflections(
-                scanBasePackages,
+                scanBasePackage,
                 new TypeAnnotationsScanner(),
                 new SubTypesScanner()
         );
 
-        return reflections.getTypesAnnotatedWith(SocketController.class);
+        return reflections.getTypesAnnotatedWith(targetAnnotation);
     }
 }

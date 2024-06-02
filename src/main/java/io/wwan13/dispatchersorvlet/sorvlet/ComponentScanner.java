@@ -14,14 +14,12 @@
  * limitations under the License.
  */
 
-package io.wwan13.dispatchersorvlet;
+package io.wwan13.dispatchersorvlet.sorvlet;
 
-import org.junit.jupiter.api.Test;
+import java.lang.annotation.Annotation;
+import java.util.Set;
 
-class DispatcherSorvletApplicationTests extends ContextTest {
+public interface ComponentScanner {
 
-    @Test
-    void contextLoads() {
-    }
-
+    Set<Class<?>> scanComponentsWithAnnotation(Class<? extends Annotation> targetAnnotation);
 }

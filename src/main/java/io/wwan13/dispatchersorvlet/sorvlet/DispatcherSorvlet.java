@@ -19,28 +19,46 @@ package io.wwan13.dispatchersorvlet.sorvlet;
 import io.wwan13.dispatchersorvlet.sorvlet.dto.request.SocketRequest;
 import io.wwan13.dispatchersorvlet.sorvlet.dto.response.SocketResponse;
 import io.wwan13.dispatchersorvlet.sorvlet.util.SocketMessageSerializer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
 public class DispatcherSorvlet {
 
+    private static final Logger log = LoggerFactory.getLogger(DispatcherSorvlet.class);
+
     private final RequestHandlers requestHandlers;
     private final ArgumentsResolver argumentsResolver;
+    private final ExceptionHandlers exceptionHandlers;
 
     public DispatcherSorvlet(
             RequestHandlers requestHandlers,
-            ArgumentsResolver argumentsResolver
+            ArgumentsResolver argumentsResolver,
+            ExceptionHandlers exceptionHandlers
     ) {
         this.requestHandlers = requestHandlers;
         this.argumentsResolver = argumentsResolver;
+        this.exceptionHandlers = exceptionHandlers;
     }
 
     public String doService(String socketMessage) {
-        SocketRequest request = SocketMessageSerializer.deserialize(socketMessage);
+        try {
+            SocketRequest request = SocketMessageSerializer.deserialize(socketMessage);
 
-        RequestHandler handler = requestHandlers.handlerMapping(request.key());
+            RequestHandler handler = requestHandlers.handlerMapping(request.key());
 
-        Object[] arguments = argumentsResolver.resolve(handler, request);
-        SocketResponse response = handler.handle(arguments);
+            Object[] arguments = argumentsResolver.resolve(handler, request);
+            SocketResponse response = (SocketResponse) handler.handle(arguments);
 
-        return SocketMessageSerializer.serialize(response);
+            return SocketMessageSerializer.serialize(response);
+        } catch (Exception e) {
+            log.error("[{}] Exception raised ({})",
+                    MDC.get("client_id"), e.getMessage());
+
+            ExceptionHandler exceptionHandler = exceptionHandlers.handlerMapping(e);
+            Object response = exceptionHandler.handle(e);
+
+            return SocketMessageSerializer.serialize(response);
+        }
     }
 }

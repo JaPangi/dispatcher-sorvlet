@@ -14,20 +14,9 @@
  * limitations under the License.
  */
 
-package io.wwan13.dispatchersorvlet.sorvlet.processor.stub;
+package io.wwan13.dispatchersorvlet.sorvlet;
 
-import io.wwan13.dispatchersorvlet.sorvlet.SocketControllerScanner;
-import io.wwan13.dispatchersorvlet.sorvlet.container.ControllerContainer;
+public interface ExceptionHandlerScanner {
 
-import java.util.Set;
-
-public class StubSocketControllerScanner implements SocketControllerScanner {
-
-    @Override
-    public Set<Class<?>> scanControllerClasses(String scanBasePackages) {
-        return Set.of(
-                ControllerContainer.TestController.class,
-                ControllerContainer.Test2Controller.class
-        );
-    }
+    ExceptionHandlers scan();
 }

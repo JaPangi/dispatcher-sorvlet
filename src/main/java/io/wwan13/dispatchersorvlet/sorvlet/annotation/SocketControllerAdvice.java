@@ -14,14 +14,19 @@
  * limitations under the License.
  */
 
-package io.wwan13.dispatchersorvlet;
+package io.wwan13.dispatchersorvlet.sorvlet.annotation;
 
-import org.junit.jupiter.api.Test;
+import org.springframework.stereotype.Component;
 
-class DispatcherSorvletApplicationTests extends ContextTest {
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-    @Test
-    void contextLoads() {
-    }
-
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Component
+@Documented
+public @interface SocketControllerAdvice {
 }

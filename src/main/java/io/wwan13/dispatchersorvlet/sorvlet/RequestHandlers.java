@@ -31,6 +31,6 @@ public record RequestHandlers(
         return handlers.stream()
                 .filter(handler -> requestKeyMatcher.matches(handler.requestKey(), requestKey))
                 .findAny()
-                .orElseThrow(HandlerNotFoundException::new);
+                .orElseThrow(() -> new HandlerNotFoundException(requestKey));
     }
 }

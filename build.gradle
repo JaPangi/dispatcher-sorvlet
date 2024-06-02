@@ -36,7 +36,15 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
-bootJar.enabled=false
+tasks.jar {
+	enabled = true
+	archiveClassifier.set("")
+}
+
+tasks.bootJar {
+	enabled = false
+	archiveClassifier.set("")
+}
 
 publishing {
 	publications {

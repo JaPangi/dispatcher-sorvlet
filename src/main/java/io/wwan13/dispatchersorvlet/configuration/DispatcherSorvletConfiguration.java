@@ -19,9 +19,12 @@ package io.wwan13.dispatchersorvlet.configuration;
 import io.wwan13.dispatchersorvlet.sorvlet.ArgumentsResolver;
 import io.wwan13.dispatchersorvlet.sorvlet.ComponentScanner;
 import io.wwan13.dispatchersorvlet.sorvlet.DispatcherSorvlet;
+import io.wwan13.dispatchersorvlet.sorvlet.ExceptionHandlerScanner;
+import io.wwan13.dispatchersorvlet.sorvlet.ExceptionHandlers;
 import io.wwan13.dispatchersorvlet.sorvlet.RequestHandlerScanner;
 import io.wwan13.dispatchersorvlet.sorvlet.RequestHandlers;
 import io.wwan13.dispatchersorvlet.sorvlet.processor.DefaultArgumentsResolver;
+import io.wwan13.dispatchersorvlet.sorvlet.processor.DefaultExceptionHandlerScanner;
 import io.wwan13.dispatchersorvlet.sorvlet.processor.DefaultRequestHandlerScanner;
 import io.wwan13.dispatchersorvlet.sorvlet.processor.ReflectionComponentScanner;
 import org.springframework.context.ApplicationContext;
@@ -30,39 +33,49 @@ import org.springframework.context.annotation.Bean;
 public class DispatcherSorvletConfiguration {
 
     @Bean
-    public ComponentScanner socketControllerScanner() {
+    public ComponentScanner componentScanner() {
         return new ReflectionComponentScanner();
     }
 
     @Bean
-    public RequestHandlerScanner requestHandlerScanner(
+    public RequestHandlers requestHandlers(
+            SocketServerProperties socketServerProperties,
             ComponentScanner componentScanner,
             ApplicationContext applicationContext
     ) {
-        return new DefaultRequestHandlerScanner(componentScanner, applicationContext);
-    }
+        RequestHandlerScanner requestHandlerScanner =
+                new DefaultRequestHandlerScanner(componentScanner, applicationContext);
 
-    @Bean
-    public RequestHandlers socketHandlers(
-            RequestHandlerScanner requestHandlerScanner,
-            SocketServerProperties socketServerProperties
-    ) {
         return requestHandlerScanner.scan(socketServerProperties.scanBasePackage());
     }
 
     @Bean
-    public ArgumentsResolver argumentResolver() {
+    public ArgumentsResolver argumentsResolver() {
         return new DefaultArgumentsResolver();
+    }
+
+    @Bean
+    public ExceptionHandlers exceptionHandlers(
+            SocketServerProperties socketServerProperties,
+            ComponentScanner componentScanner,
+            ApplicationContext applicationContext
+    ) {
+        ExceptionHandlerScanner scanner =
+                new DefaultExceptionHandlerScanner(componentScanner, applicationContext);
+
+        return scanner.scan(socketServerProperties.scanBasePackage());
     }
 
     @Bean
     public DispatcherSorvlet dispatcherSorvlet(
             RequestHandlers requestHandlers,
-            ArgumentsResolver argumentsResolver
+            ArgumentsResolver argumentsResolver,
+            ExceptionHandlers exceptionHandlers
     ) {
         return new DispatcherSorvlet(
                 requestHandlers,
-                argumentsResolver
+                argumentsResolver,
+                exceptionHandlers
         );
     }
 }

@@ -38,20 +38,10 @@ tasks.named('test') {
 
 bootJar.enabled=false
 
-afterEvaluate {
-	publishing {
-		publications {
-			register<MavenPublication>("release") {
-				from(components["release"])
-				groupId = "com.github.JaPangi"
-				artifactId = "dispatcher-sorvlet"
-				version = "0.1.0"
-
-				pom {
-					name.set("dispatcher-sorvlet")
-					description.set("description")
-				}
-			}
+publishing {
+	publications {
+		maven(MavenPublication) {
+			from components.java
 		}
 	}
 }

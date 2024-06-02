@@ -16,10 +16,11 @@
 
 package io.wwan13.dispatchersorvlet.sorvlet;
 
+import io.wwan13.dispatchersorvlet.sorvlet.annotation.KeyParameter;
+import io.wwan13.dispatchersorvlet.sorvlet.annotation.RequestBody;
 import io.wwan13.dispatchersorvlet.sorvlet.annotation.RequestMapping;
-import io.wwan13.dispatchersorvlet.sorvlet.dto.response.SocketResponse;
+import io.wwan13.dispatchersorvlet.sorvlet.util.MethodExecutor;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 
@@ -32,11 +33,28 @@ public record RequestHandler(
     private static final String REQUEST_KEY_FORMAT = "%s_%s";
 
     public static RequestHandler of(Object controller, Method method) {
+        validateParameter(method);
+
         return new RequestHandler(
                 getRequestKey(controller, method),
                 controller,
                 method
         );
+    }
+
+    private static void validateParameter(Method method) {
+        Parameter[] parameters = method.getParameters();
+
+        for (Parameter parameter : parameters) {
+            boolean hasResolvableAnnotation = parameter.isAnnotationPresent(RequestBody.class) ||
+                    parameter.isAnnotationPresent(KeyParameter.class);
+
+            if (!hasResolvableAnnotation) {
+                throw new IllegalStateException(
+                        "Controller method's parameters must have resolve annotation"
+                );
+            }
+        }
     }
 
     private static String getRequestKey(Object controller, Method method) {
@@ -50,15 +68,8 @@ public record RequestHandler(
         return String.format(REQUEST_KEY_FORMAT, keyPrefix, methodKey);
     }
 
-    public SocketResponse handle(Object[] arguments) {
-        try {
-            method.setAccessible(true);
-            return (SocketResponse) method.invoke(controller, arguments);
-        } catch (IllegalAccessException e) {
-            throw new IllegalStateException("Cannot access handler");
-        } catch (InvocationTargetException e) {
-            throw new IllegalStateException("Cannot invoke handler");
-        }
+    public Object handle(Object[] arguments) {
+        return MethodExecutor.execute(controller, method, arguments);
     }
 
     public Parameter[] getHandlerParameters() {

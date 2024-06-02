@@ -2,10 +2,11 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.13'
 	id 'io.spring.dependency-management' version '1.1.5'
+	id 'maven-publish'
 }
 
 group = 'io.wwan13'
-version = '0.0.1-SNAPSHOT'
+version = '0.1.0'
 
 java {
 	sourceCompatibility = '17'
@@ -33,4 +34,14 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+bootJar.enabled=false
+
+publishing {
+	publications {
+		maven(MavenPublication) {
+			from components.java
+		}
+	}
 }

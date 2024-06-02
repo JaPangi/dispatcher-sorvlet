@@ -17,13 +17,11 @@
 package io.wwan13.dispatchersorvlet;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
 class DispatcherSorvletApplicationTests extends ContextTest {
 
-	@Test
-	void contextLoads() {
-	}
+    @Test
+    void contextLoads() {
+    }
 
 }

@@ -18,10 +18,9 @@ package io.wwan13.dispatchersorvlet.sorvlet;
 
 import io.wwan13.dispatchersorvlet.UnitTest;
 import io.wwan13.dispatchersorvlet.exception.HandlerNotFoundException;
+import io.wwan13.dispatchersorvlet.sorvlet.annotation.KeyParameter;
 import io.wwan13.dispatchersorvlet.sorvlet.annotation.RequestMapping;
-import io.wwan13.dispatchersorvlet.sorvlet.annotation.SocketController;
 import io.wwan13.dispatchersorvlet.sorvlet.dto.response.SocketResponse;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -35,7 +34,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class RequestHandlersTest extends UnitTest {
 
-    @SocketController
     @RequestMapping(key = "TEST")
     static class TestController {
 
@@ -55,7 +53,7 @@ class RequestHandlersTest extends UnitTest {
         }
 
         @RequestMapping(key = "FOURTH_{param}")
-        public SocketResponse fourth(String param) {
+        public SocketResponse fourth(@KeyParameter String param) {
             return SocketResponse.success(param);
         }
     }

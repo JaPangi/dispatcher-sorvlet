@@ -17,8 +17,8 @@
 package io.wwan13.dispatchersorvlet.sorvlet;
 
 import io.wwan13.dispatchersorvlet.UnitTest;
+import io.wwan13.dispatchersorvlet.sorvlet.annotation.RequestBody;
 import io.wwan13.dispatchersorvlet.sorvlet.annotation.RequestMapping;
-import io.wwan13.dispatchersorvlet.sorvlet.annotation.SocketController;
 import io.wwan13.dispatchersorvlet.sorvlet.dto.response.SocketResponse;
 import io.wwan13.dispatchersorvlet.sorvlet.dto.response.SuccessResponse;
 import org.junit.jupiter.api.Test;
@@ -29,7 +29,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class RequestHandlerTest extends UnitTest {
 
-    @SocketController
     @RequestMapping(key = "TEST")
     static class Test1Controller {
 
@@ -70,11 +69,10 @@ class RequestHandlerTest extends UnitTest {
         assertThat(response.getData()).isEqualTo("first");
     }
 
-    @SocketController
     static class Test2Controller {
 
         @RequestMapping(key = "SECOND")
-        public SocketResponse test(String arg) {
+        public SocketResponse test(@RequestBody String arg) {
             return SocketResponse.success(arg);
         }
     }

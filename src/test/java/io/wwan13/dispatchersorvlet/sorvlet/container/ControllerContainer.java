@@ -16,13 +16,12 @@
 
 package io.wwan13.dispatchersorvlet.sorvlet.container;
 
+import io.wwan13.dispatchersorvlet.sorvlet.annotation.KeyParameter;
 import io.wwan13.dispatchersorvlet.sorvlet.annotation.RequestMapping;
-import io.wwan13.dispatchersorvlet.sorvlet.annotation.SocketController;
 import io.wwan13.dispatchersorvlet.sorvlet.dto.response.SocketResponse;
 
 public class ControllerContainer {
 
-    @SocketController
     @RequestMapping(key = "TEST")
     public static class TestController {
 
@@ -42,12 +41,11 @@ public class ControllerContainer {
         }
 
         @RequestMapping(key = "FOURTH_{param}")
-        public SocketResponse fourth(String param) {
+        public SocketResponse fourth(@KeyParameter String param) {
             return SocketResponse.success(param);
         }
     }
 
-    @SocketController
     public static class Test2Controller {
 
         @RequestMapping(key = "FIRST")

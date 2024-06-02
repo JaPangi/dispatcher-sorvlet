@@ -5,8 +5,8 @@ plugins {
 	id 'maven-publish'
 }
 
-group = 'io.wwan13'
-version = '0.1.0'
+group = 'com.github.JaPangi'
+version = '0.1.1'
 
 java {
 	sourceCompatibility = '17'
@@ -44,4 +44,9 @@ publishing {
 			from components.java
 		}
 	}
+}
+
+wrapper {
+	gradleVersion = "7.5"
+	distributionType = Wrapper.DistributionType.ALL
 }

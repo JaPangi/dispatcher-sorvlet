@@ -17,21 +17,23 @@
 package io.wwan13.dispatchersorvlet.sorvlet.processor.stub;
 
 import io.wwan13.dispatchersorvlet.sorvlet.ComponentScanner;
-import io.wwan13.dispatchersorvlet.sorvlet.container.ControllerContainer;
 
 import java.lang.annotation.Annotation;
 import java.util.Set;
 
 public class StubComponentScanner implements ComponentScanner {
 
+    Set<Class<?>> components;
+
+    public void componentsWillBe(Set<Class<?>> components) {
+        this.components = components;
+    }
+
     @Override
     public Set<Class<?>> scanComponentsWithAnnotation(
             Class<? extends Annotation> targetAnnotation,
             String scanBasePackages
     ) {
-        return Set.of(
-                ControllerContainer.TestController.class,
-                ControllerContainer.Test2Controller.class
-        );
+        return components;
     }
 }

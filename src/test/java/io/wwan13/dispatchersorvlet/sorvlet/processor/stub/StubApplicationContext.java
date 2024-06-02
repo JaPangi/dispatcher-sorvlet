@@ -16,6 +16,7 @@
 
 package io.wwan13.dispatchersorvlet.sorvlet.processor.stub;
 
+import io.wwan13.dispatchersorvlet.sorvlet.container.ControllerAdviceContainer;
 import io.wwan13.dispatchersorvlet.sorvlet.container.ControllerContainer;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
@@ -157,6 +158,9 @@ public class StubApplicationContext implements ApplicationContext {
         }
         if (name.equals("test2Controller")) {
             return new ControllerContainer.Test2Controller();
+        }
+        if (name.equals("testControllerAdvice")) {
+            return new ControllerAdviceContainer.TestControllerAdvice();
         }
         return null;
     }

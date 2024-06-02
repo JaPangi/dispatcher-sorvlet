@@ -18,24 +18,31 @@ package io.wwan13.dispatchersorvlet.sorvlet.processor;
 
 import io.wwan13.dispatchersorvlet.UnitTest;
 import io.wwan13.dispatchersorvlet.sorvlet.RequestHandlers;
+import io.wwan13.dispatchersorvlet.sorvlet.container.ControllerContainer;
 import io.wwan13.dispatchersorvlet.sorvlet.processor.stub.StubApplicationContext;
 import io.wwan13.dispatchersorvlet.sorvlet.processor.stub.StubComponentScanner;
 import org.junit.jupiter.api.Test;
+
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class DefaultRequestHandlerScannerTest extends UnitTest {
 
-    static DefaultRequestHandlerScanner handlerScanner =
-            new DefaultRequestHandlerScanner(
-                    new StubComponentScanner(),
-                    new StubApplicationContext()
-            );
-
     @Test
     void should_ExtractAllHandlers() {
         // given
         final String basePath = "";
+        final StubComponentScanner componentScanner = new StubComponentScanner();
+        componentScanner.componentsWillBe(
+                Set.of(
+                        ControllerContainer.TestController.class,
+                        ControllerContainer.Test2Controller.class
+                )
+        );
+
+        final DefaultRequestHandlerScanner handlerScanner =
+                new DefaultRequestHandlerScanner(componentScanner, new StubApplicationContext());
 
         // when
         RequestHandlers handlers = handlerScanner.scan(basePath);

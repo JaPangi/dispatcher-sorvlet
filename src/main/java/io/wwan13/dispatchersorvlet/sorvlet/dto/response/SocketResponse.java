@@ -18,8 +18,11 @@ package io.wwan13.dispatchersorvlet.sorvlet.dto.response;
 
 public abstract class SocketResponse {
 
-    private final ResponseStatus status;
-    private final String message;
+    private ResponseStatus status;
+    private String message;
+
+    public SocketResponse() {
+    }
 
     protected SocketResponse(ResponseStatus status, String message) {
         this.status = status;

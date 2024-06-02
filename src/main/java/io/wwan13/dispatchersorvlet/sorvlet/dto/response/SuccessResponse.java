@@ -20,7 +20,10 @@ public class SuccessResponse<T> extends SocketResponse {
 
     private static final String DEFAULT_SUCCESS_MESSAGE = "request success";
 
-    private final T data;
+    private T data;
+
+    public SuccessResponse() {
+    }
 
     public SuccessResponse(T data, String message) {
         super(ResponseStatus.SUCCESS, message);

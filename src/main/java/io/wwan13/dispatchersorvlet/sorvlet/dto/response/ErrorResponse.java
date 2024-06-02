@@ -20,7 +20,10 @@ public class ErrorResponse extends SocketResponse {
 
     private static final String DEFAULT_ERROR_MESSAGE = "request failed";
 
-    private final String errorCode;
+    private String errorCode;
+
+    private ErrorResponse() {
+    }
 
     protected ErrorResponse(String errorCode, String message) {
         super(ResponseStatus.ERROR, message);

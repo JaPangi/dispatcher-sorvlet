@@ -21,7 +21,6 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.wwan13.dispatchersorvlet.exception.InvalidRequestException;
 import io.wwan13.dispatchersorvlet.sorvlet.dto.request.SocketRequest;
-import io.wwan13.dispatchersorvlet.sorvlet.dto.response.SocketResponse;
 
 public class SocketMessageSerializer {
 
@@ -40,7 +39,7 @@ public class SocketMessageSerializer {
         }
     }
 
-    public static String serialize(SocketResponse response) {
+    public static String serialize(Object response) {
         try {
             return objectMapper.writeValueAsString(response);
         } catch (JsonProcessingException e) {

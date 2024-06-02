@@ -70,7 +70,7 @@ public class DefaultRequestHandlerScanner implements RequestHandlerScanner {
             Object controller,
             Set<RequestHandler> handlers
     ) {
-        Arrays.stream(controller.getClass().getMethods())
+        Arrays.stream(controller.getClass().getDeclaredMethods())
                 .filter(this::isHandlerMethod)
                 .forEach(method -> {
                     RequestHandler handler = RequestHandler.of(controller, method);

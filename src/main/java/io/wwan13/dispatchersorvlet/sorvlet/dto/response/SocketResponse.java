@@ -29,12 +29,12 @@ public abstract class SocketResponse {
         this.message = message;
     }
 
-    public static <T> SocketResponse success(T data) {
-        return new SuccessResponse<T>(data);
+    public static <T> SuccessResponse success(T data) {
+        return new SuccessResponse<>(data);
     }
 
-    public static <T> SocketResponse success(T data, String message) {
-        return new SuccessResponse<T>(data, message);
+    public static <T> SuccessResponse success(T data, String message) {
+        return new SuccessResponse<>(data, message);
     }
 
     public static ErrorResponse error(String errorCode) {

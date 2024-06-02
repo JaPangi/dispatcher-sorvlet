@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.13'
 	id 'io.spring.dependency-management' version '1.1.5'
+	id 'maven-publish'
 }
 
 group = 'io.wwan13'
@@ -36,3 +37,21 @@ tasks.named('test') {
 }
 
 bootJar.enabled=false
+
+afterEvaluate {
+	publishing {
+		publications {
+			register<MavenPublication>("release") {
+				from(components["release"])
+				groupId = "com.github.JaPangi"
+				artifactId = "dispatcher-sorvlet"
+				version = "0.1.0"
+
+				pom {
+					name.set("dispatcher-sorvlet")
+					description.set("description")
+				}
+			}
+		}
+	}
+}

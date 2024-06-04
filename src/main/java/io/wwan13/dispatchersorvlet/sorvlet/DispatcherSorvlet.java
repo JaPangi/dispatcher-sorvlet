@@ -23,6 +23,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
+import java.lang.reflect.InvocationTargetException;
+
 public class DispatcherSorvlet {
 
     private static final Logger log = LoggerFactory.getLogger(DispatcherSorvlet.class);
@@ -55,10 +57,19 @@ public class DispatcherSorvlet {
             log.error("[{}] Exception raised ({})",
                     MDC.get("client_id"), e.getMessage());
 
-            ExceptionHandler exceptionHandler = exceptionHandlers.handlerMapping(e);
+            Exception targetException = getTargetException(e);
+
+            ExceptionHandler exceptionHandler = exceptionHandlers.handlerMapping(targetException);
             Object response = exceptionHandler.handle(e);
 
             return SocketMessageSerializer.serialize(response);
         }
+    }
+
+    private Exception getTargetException(Exception exception) {
+        if (exception instanceof InvocationTargetException) {
+            return (Exception) exception.getCause();
+        }
+        return exception;
     }
 }

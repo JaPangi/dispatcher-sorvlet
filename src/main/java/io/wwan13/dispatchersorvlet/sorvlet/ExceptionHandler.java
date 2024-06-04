@@ -59,8 +59,8 @@ public record ExceptionHandler(
         ).support();
     }
 
-    public boolean matches(Class<? extends Throwable> exception) {
-        return exceptionClazz.isAssignableFrom(exception);
+    public boolean matches(Exception exception) {
+        return exceptionClazz.isAssignableFrom(exception.getClass());
     }
 
     public Object handle(Exception exception) {

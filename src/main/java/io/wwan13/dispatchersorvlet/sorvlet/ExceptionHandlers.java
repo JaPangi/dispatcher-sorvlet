@@ -18,6 +18,7 @@ package io.wwan13.dispatchersorvlet.sorvlet;
 
 import io.wwan13.dispatchersorvlet.sorvlet.exceptioinhandler.DefaultExceptionHandler;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 public record ExceptionHandlers(
@@ -30,9 +31,18 @@ public record ExceptionHandlers(
     );
 
     public ExceptionHandler handlerMapping(Exception exception) {
+        Exception handlingException = getHandlingException(exception);
+
         return handlers.stream()
-                .filter(handler -> handler.matches(exception))
+                .filter(handler -> handler.matches(handlingException))
                 .findFirst()
                 .orElse(DEFAULT_EXCEPTION_HANDLER);
+    }
+
+    private Exception getHandlingException(Exception exception) {
+        if (exception instanceof InvocationTargetException) {
+            return (Exception) exception.getCause();
+        }
+        return exception;
     }
 }

@@ -59,15 +59,15 @@ public record ExceptionHandler(
         ).support();
     }
 
-    public boolean matches(Exception exception) {
-        return exceptionClazz.isAssignableFrom(exception.getClass());
+    public boolean matches(Class<? extends Throwable> exception) {
+        return exceptionClazz.isAssignableFrom(exception);
     }
 
     public Object handle(Exception exception) {
         try {
             Class<?> parameterClazz = method.getParameters()[0].getClass();
             Object argument = objectMapper.convertValue(exception, parameterClazz);
-            return MethodExecutor.execute(controllerAdvice, method, exception);
+            return MethodExecutor.execute(controllerAdvice, method, argument);
         } catch (InvocationTargetException e) {
             return SocketResponse.error(
                     e.getClass().getSimpleName(),

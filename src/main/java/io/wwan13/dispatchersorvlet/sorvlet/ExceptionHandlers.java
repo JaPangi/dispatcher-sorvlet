@@ -31,7 +31,7 @@ public record ExceptionHandlers(
     );
 
     public ExceptionHandler handlerMapping(Exception exception) {
-        Exception handlingException = getHandlingException(exception);
+        Class<? extends Throwable> handlingException = getHandlingException(exception);
 
         return handlers.stream()
                 .filter(handler -> handler.matches(handlingException))
@@ -39,10 +39,10 @@ public record ExceptionHandlers(
                 .orElse(DEFAULT_EXCEPTION_HANDLER);
     }
 
-    private Exception getHandlingException(Exception exception) {
+    private Class<? extends Throwable> getHandlingException(Exception exception) {
         if (exception instanceof InvocationTargetException) {
-            return (Exception) exception.getCause();
+            return exception.getCause().getClass();
         }
-        return exception;
+        return exception.getClass();
     }
 }

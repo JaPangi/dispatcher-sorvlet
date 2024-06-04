@@ -16,8 +16,10 @@
 
 package io.wwan13.dispatchersorvlet.sorvlet;
 
+import io.wwan13.dispatchersorvlet.sorvlet.dto.response.SocketResponse;
 import io.wwan13.dispatchersorvlet.sorvlet.util.MethodExecutor;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public record ExceptionHandler(
@@ -58,7 +60,14 @@ public record ExceptionHandler(
         return exceptionClazz.isAssignableFrom(exception.getClass());
     }
 
-    public Object handle(Exception e) {
-        return MethodExecutor.execute(controllerAdvice, method, e);
+    public Object handle(Exception exception) {
+        try {
+            return MethodExecutor.execute(controllerAdvice, method, exception);
+        } catch (InvocationTargetException e) {
+            return SocketResponse.error(
+                    e.getClass().getSimpleName(),
+                    "Exception occurred while handling an exception."
+            );
+        }
     }
 }

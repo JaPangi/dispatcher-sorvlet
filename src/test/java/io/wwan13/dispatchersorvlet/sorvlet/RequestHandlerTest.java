@@ -23,6 +23,7 @@ import io.wwan13.dispatchersorvlet.sorvlet.dto.response.SocketResponse;
 import io.wwan13.dispatchersorvlet.sorvlet.dto.response.SuccessResponse;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -54,7 +55,7 @@ class RequestHandlerTest extends UnitTest {
     }
 
     @Test
-    void should_ExecuteControllerMethod_when_ParameterNotExists() {
+    void should_ExecuteControllerMethod_when_ParameterNotExists() throws InvocationTargetException {
         // given
         final Object controller = new Test1Controller();
         final Method method = controller.getClass().getDeclaredMethods()[0];
@@ -93,7 +94,7 @@ class RequestHandlerTest extends UnitTest {
     }
 
     @Test
-    void should_ExecuteControllerMethod_when_WithParameter() {
+    void should_ExecuteControllerMethod_when_WithParameter() throws InvocationTargetException {
         // given
         final Object controller = new Test2Controller();
         final Method method = controller.getClass().getDeclaredMethods()[0];

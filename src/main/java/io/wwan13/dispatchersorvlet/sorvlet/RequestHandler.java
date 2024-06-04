@@ -21,6 +21,7 @@ import io.wwan13.dispatchersorvlet.sorvlet.annotation.RequestBody;
 import io.wwan13.dispatchersorvlet.sorvlet.annotation.RequestMapping;
 import io.wwan13.dispatchersorvlet.sorvlet.util.MethodExecutor;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 
@@ -68,7 +69,7 @@ public record RequestHandler(
         return String.format(REQUEST_KEY_FORMAT, keyPrefix, methodKey);
     }
 
-    public Object handle(Object[] arguments) {
+    public Object handle(Object[] arguments) throws InvocationTargetException {
         return MethodExecutor.execute(controller, method, arguments);
     }
 

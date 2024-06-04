@@ -25,14 +25,13 @@ public class MethodExecutor {
         throw new IllegalStateException("Cannot instantiate a utility class!");
     }
 
-    public static Object execute(Object object, Method method, Object... arguments) {
+    public static Object execute(Object object, Method method, Object... arguments)
+            throws InvocationTargetException {
         try {
             method.setAccessible(true);
             return method.invoke(object, arguments);
         } catch (IllegalAccessException e) {
             throw new IllegalStateException("Cannot access handler");
-        } catch (InvocationTargetException e) {
-            throw new IllegalStateException("Cannot invoke handler");
         }
     }
 }

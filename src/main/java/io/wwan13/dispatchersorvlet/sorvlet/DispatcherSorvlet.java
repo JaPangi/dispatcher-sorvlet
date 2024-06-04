@@ -48,7 +48,7 @@ public class DispatcherSorvlet {
             RequestHandler handler = requestHandlers.handlerMapping(request.key());
 
             Object[] arguments = argumentsResolver.resolve(handler, request);
-            SocketResponse response = (SocketResponse) handler.handle(arguments);
+            Object response = handler.handle(arguments);
 
             return SocketMessageSerializer.serialize(response);
         } catch (Exception e) {

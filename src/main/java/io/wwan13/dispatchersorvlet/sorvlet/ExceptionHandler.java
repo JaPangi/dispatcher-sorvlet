@@ -16,7 +16,6 @@
 
 package io.wwan13.dispatchersorvlet.sorvlet;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.wwan13.dispatchersorvlet.sorvlet.dto.response.SocketResponse;
 import io.wwan13.dispatchersorvlet.sorvlet.util.MethodExecutor;
 
@@ -28,8 +27,6 @@ public record ExceptionHandler(
         Object controllerAdvice,
         Method method
 ) {
-
-    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     public static ExceptionHandler of(Object controllerAdvice, Method method) {
         validateParameter(method);
@@ -65,9 +62,7 @@ public record ExceptionHandler(
 
     public Object handle(Exception exception) {
         try {
-            Class<?> parameterClazz = method.getParameters()[0].getClass();
-            Object argument = objectMapper.convertValue(exception, parameterClazz);
-            return MethodExecutor.execute(controllerAdvice, method, argument);
+            return MethodExecutor.execute(controllerAdvice, method, exception);
         } catch (InvocationTargetException e) {
             return SocketResponse.error(
                     e.getClass().getSimpleName(),

@@ -19,7 +19,7 @@ repositories {
 ```
 ```groovy
 dependencies {
-    implementation 'com.github.JaPangi:dispatcher-sorvlet:0.1.2'
+    implementation 'com.github.JaPangi:dispatcher-sorvlet:0.1.4'
 }
 ```
 
@@ -101,7 +101,7 @@ public SocketResponse modifyItem(
 }
 ~~~
 ~~~json
-{"key":"ITEM_MODIFY_3","data":{"itemName":"dispatcher sorvlet","itemPrice":3700}}
+{"key":"ITEM_MODIFY_3","body":{"itemName":"dispatcher sorvlet","itemPrice":3700}}
 ~~~
 If you want to receive some data in a request or include a specific variable in the request key, you can use it as follows.
 

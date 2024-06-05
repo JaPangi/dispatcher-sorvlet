@@ -23,6 +23,7 @@ import io.wwan13.dispatchersorvlet.sorvlet.RequestHandler;
 import io.wwan13.dispatchersorvlet.sorvlet.annotation.KeyParameter;
 import io.wwan13.dispatchersorvlet.sorvlet.annotation.RequestBody;
 import io.wwan13.dispatchersorvlet.sorvlet.dto.request.SocketRequest;
+import io.wwan13.dispatchersorvlet.sorvlet.util.TypeConverter;
 
 import java.lang.reflect.Parameter;
 import java.util.List;
@@ -31,8 +32,8 @@ import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKN
 
 public class DefaultArgumentsResolver implements ArgumentsResolver {
 
-    private final static ObjectMapper objectMapper = new ObjectMapper()
-            .configure(FAIL_ON_UNKNOWN_PROPERTIES, false);
+//    private final static ObjectMapper objectMapper = new ObjectMapper()
+//            .configure(FAIL_ON_UNKNOWN_PROPERTIES, false);
     private static final String KEY_PARAMETER_DELIMITER = "_";
     private static final String KEY_PARAMETER_FORMAT = "{%s}";
 
@@ -66,7 +67,7 @@ public class DefaultArgumentsResolver implements ArgumentsResolver {
     }
 
     private Object resolveRequestBody(Object requestBody, Parameter parameter) {
-        return objectMapper.convertValue(requestBody, parameter.getType());
+        return TypeConverter.convert(requestBody, parameter.getType());
     }
 
     private Object resolveKeyParameter(
@@ -75,11 +76,11 @@ public class DefaultArgumentsResolver implements ArgumentsResolver {
             Parameter parameter
     ) {
         String keyParameter = String.format(KEY_PARAMETER_FORMAT, parameter.getName());
-        int keyParameterIndex = List.of(registeredKey.split(KEY_PARAMETER_DELIMITER))
-                .indexOf(keyParameter);
+        int keyParameterIndex =
+                List.of(registeredKey.split(KEY_PARAMETER_DELIMITER)).indexOf(keyParameter);
 
-        String givenValue = List.of(requestKey.split(KEY_PARAMETER_DELIMITER))
-                .get(keyParameterIndex);
-        return objectMapper.convertValue(givenValue, parameter.getType());
+        String givenValue = requestKey.split(KEY_PARAMETER_DELIMITER)[keyParameterIndex];
+
+        return TypeConverter.convert(givenValue, parameter.getType());
     }
 }

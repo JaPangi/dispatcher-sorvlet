@@ -17,7 +17,6 @@
 package io.wwan13.dispatchersorvlet.sorvlet;
 
 import io.wwan13.dispatchersorvlet.sorvlet.dto.request.SocketRequest;
-import io.wwan13.dispatchersorvlet.sorvlet.dto.response.SocketResponse;
 import io.wwan13.dispatchersorvlet.sorvlet.util.SocketMessageSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,19 +53,19 @@ public class DispatcherSorvlet {
 
             return SocketMessageSerializer.serialize(response);
         } catch (Exception e) {
+            Exception rootException = getRootException(e);
+
+            ExceptionHandler exceptionHandler = exceptionHandlers.handlerMapping(rootException);
+            Object response = exceptionHandler.handle(rootException);
+
             log.error("[{}] Exception raised ({})",
-                    MDC.get("client_id"), e.getMessage());
-
-            Exception targetException = getTargetException(e);
-
-            ExceptionHandler exceptionHandler = exceptionHandlers.handlerMapping(targetException);
-            Object response = exceptionHandler.handle(targetException);
+                    MDC.get("client_id"), rootException.getMessage());
 
             return SocketMessageSerializer.serialize(response);
         }
     }
 
-    private Exception getTargetException(Exception exception) {
+    private Exception getRootException(Exception exception) {
         if (exception instanceof InvocationTargetException) {
             return (Exception) exception.getCause();
         }

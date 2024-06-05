@@ -60,7 +60,7 @@ public class DispatcherSorvlet {
             Exception targetException = getTargetException(e);
 
             ExceptionHandler exceptionHandler = exceptionHandlers.handlerMapping(targetException);
-            Object response = exceptionHandler.handle(e);
+            Object response = exceptionHandler.handle(targetException);
 
             return SocketMessageSerializer.serialize(response);
         }

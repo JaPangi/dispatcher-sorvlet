@@ -19,7 +19,7 @@ repositories {
 ```
 ```groovy
 dependencies {
-    implementation 'com.github.JaPangi:dispatcher-sorvlet:0.1.4'
+    implementation 'com.github.JaPangi:dispatcher-sorvlet:0.2.0'
 }
 ```
 

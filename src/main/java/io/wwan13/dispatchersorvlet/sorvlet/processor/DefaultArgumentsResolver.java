@@ -32,8 +32,6 @@ import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKN
 
 public class DefaultArgumentsResolver implements ArgumentsResolver {
 
-//    private final static ObjectMapper objectMapper = new ObjectMapper()
-//            .configure(FAIL_ON_UNKNOWN_PROPERTIES, false);
     private static final String KEY_PARAMETER_DELIMITER = "_";
     private static final String KEY_PARAMETER_FORMAT = "{%s}";
 
